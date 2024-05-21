@@ -7,7 +7,6 @@ db.init_app(app)
 app.app_context().push()
 app.secret_key = "APtlnuRu04uv"
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -59,5 +58,15 @@ def logout():
     session.pop('type',None)
     return redirect('/')
 
+@app.route('/dashbord')
+def dashbord():
+    if 'type' not in session:
+        return redirect('/')
+    if session['type']=='admin':
+        return render_template('admindash.html')
+    elif session['type']=='influencer':
+        return render_template('infludash.html')
+    else:
+        return render_template('sponsordash.html')
 if __name__ == '__main__':
     app.run(debug=True)
