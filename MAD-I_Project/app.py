@@ -1,7 +1,6 @@
 from flask import Flask, redirect, render_template, request 
 from flask import session
 from table import *
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.sqlite3"
 db.init_app(app)
@@ -16,21 +15,31 @@ def index():
 #abhi ye krna hai 
 @app.route('/login',methods=['GET','POST'])
 def login():
-    if 'user' not in session:
+    if 'userid' not in session:
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
             #first check if the username and password are correct or not 
-            session['userid'] = username
-            session['password'] = password
+            if username=='admin' and password=='#pas123':
+                session['userid'] = username
+                session['password'] = password
+                session['type'] = 'admin'
+                return redirect('/dashbord')
+            else:
+                #check karo if true
+                session['userid'] = username
+                session['password'] = password
+                session['type'] = 'influencer'
+                #agar sponsor hain toh sponsordashbord karo warna fir influencer dashbord 
             #agar exist nahi krta tohi krna hain 
-            return render_template('dashbord.html')
+                return redirect('/dashbord')
         else:
             return render_template('login.html')
     else:
         #return the fact that user has already logged in 
-        return render_template('loggedin.html')
+        return render_template('loggedin.html',name=session['userid'])
 
+#sign up mai usernmae cannot be that from sponsor or influencer or admin 
 @app.route('/contact',methods=['GET','POST'])
 def contact():
     if request.method=='POST':
@@ -43,5 +52,12 @@ def contact():
     return render_template('contact.html')
 #contact krke admin se baat kr skte hain 
 #and agar loggined nahi hain and then dashbord pe jane ki koshish kar rahe ho toh redirect to index 
+@app.route('/logout')
+def logout():
+    session.pop('userid',None)
+    session.pop('password',None)
+    session.pop('type',None)
+    return redirect('/')
+
 if __name__ == '__main__':
     app.run(debug=True)
