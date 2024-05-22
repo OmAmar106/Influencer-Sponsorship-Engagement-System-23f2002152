@@ -2,7 +2,8 @@
 <html>
     <head>
         <title>Log in to ADFinder</title>
-        <link rel = "stylesheet" href = "/static/css/login.css">
+        <link rel = "stylesheet" href = "/static/css/signup.css">
+        <script src = "/static/js/signup.js"></script>
         <!--add a icon here for the website-->
         <!--also in others , add useful info such as db er model and all-->
     </head>
@@ -21,13 +22,18 @@
             </div>
         </div>
         <div class="content">
-            <h1 style="text-align: center;">Login Form</h1>
-            <form method="POST">
+            <h1 style="text-align: center;">SignUp Form</h1>
+            <form onsubmit="return validate()" method="POST" name="form">
                 UserName : <input type = "text" name = 'username' required>
-                <br><br>
+                <br>
                 Password : <input type = "password" name = 'password' required>
-                <br><br><br><br>
+                <br>
+                Enter Again : <input type = "password" name = 'password1' required>
+                <p id="error" style="color:red;font-size: medium;"></p>
                 <input type = "submit" value = "submit">    
+                {% if flag %}
+                    <p id="error1" style="color:red;font-size: medium;">username already exists</p>
+                {% endif %}
             </form>
         </div>
     </body>

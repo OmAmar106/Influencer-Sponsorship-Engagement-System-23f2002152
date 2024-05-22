@@ -1,6 +1,8 @@
 from flask import Flask, redirect, render_template, request 
 from flask import session
 from table import *
+import jinja2
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.sqlite3"
 db.init_app(app)
@@ -38,6 +40,21 @@ def login():
         #return the fact that user has already logged in 
         return render_template('loggedin.html',name=session['userid'])
 
+@app.route('/signup',methods=['GET','POST'])
+def signup():
+    if request.method=='POST':
+        name = request.form['username']
+        password = request.form['password']
+        #ab check karo ki if vo already table mai hi ki nahi, nahi hain toh daalo 
+        ## abhi kal idhar update krna hain ##
+        ## ## 
+        ## ## 
+        if name=='admin':
+            return render_template('signup.html',flag=True)
+        return redirect('/login')
+    else:
+        return render_template('signup.html',flag=False)
+    
 #sign up mai usernmae cannot be that from sponsor or influencer or admin 
 @app.route('/contact',methods=['GET','POST'])
 def contact():

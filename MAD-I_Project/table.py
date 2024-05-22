@@ -5,14 +5,14 @@ db = SQLAlchemy()
 class Sponsors(db.Model):
     __tablename__ = 'sponsor'
     ID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    name = db.Column(db.String,nullable=False,unique=True)
+    username = db.Column(db.String,nullable=False,unique=True)
     password = db.Column(db.String,nullable=False,unique = True)
 
 #table containing the name of the influencers
 class Influencer(db.Model):
     __tablename__ = 'influencer'
     ID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    name = db.Column(db.String,nullable = False,unique = True)
+    username = db.Column(db.String,nullable = False,unique = True)
     password = db.Column(db.String,nullable = False,unique = True)
 
 class Campaign(db.Model):
