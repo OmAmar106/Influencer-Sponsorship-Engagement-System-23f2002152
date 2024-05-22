@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Welcome to ADFinder</title>
-        <link rel = "stylesheet" href = "/static/css/index.css">
+        <title>Log in to ADFinder</title>
+        <link rel = "stylesheet" href = "/static/css/choice.css">
         <!--add a icon here for the website-->
         <!--also in others , add useful info such as db er model and all-->
     </head>
@@ -21,13 +21,14 @@
             </div>
         </div>
         <div class="content">
-            <br><br><br>
-            <h1 style="text-align: center;">Login/Signup</h1>
-            <br><br><br>
-            <a href="/login" class="btn">Log In</a>
+            <h1 style="text-align: center;">Signup As</h1>
             <br><br>
-            <br>
-            <a href="/signup" class="btn">Sign Up</a>
+            <form method="POST" name="form">
+                <input type = "submit" name = 'sponsor' value="Sponsor">
+                <br><br><br>
+                <input type = "submit" name = 'influencer' value="Influencer">
+                <br>
+            </form>
         </div>
     </body>
 </html>

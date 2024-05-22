@@ -8,6 +8,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.sqlite3"
 db.init_app(app)
 app.app_context().push()
 app.secret_key = "APtlnuRu04uv"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #good for performance 
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def index():
@@ -28,12 +31,23 @@ def login():
                 return redirect('/dashbord')
             else:
                 #check karo if true
-                session['userid'] = username
-                session['password'] = password
-                session['type'] = 'influencer'
+                sponsors = Sponsors.query.all()
+                for i in sponsors:
+                    if i.username==username and i.password==password:
+                        session['userid'] = username
+                        session['password'] = password
+                        session['type'] = 'sponsor'
+                        return redirect('/dashbord')
+                influencers = Influencer.query.all()
+                for i in influencers:
+                    if i.username==username and i.password==password:
+                        session['userid'] = username
+                        session['password'] = password
+                        session['type'] = 'influencer'
+                        return redirect('/dashbord')
                 #agar sponsor hain toh sponsordashbord karo warna fir influencer dashbord 
-            #agar exist nahi krta tohi krna hain 
-                return redirect('/dashbord')
+                #agar exist nahi krta tohi krna hain 
+            return render_template('login.html',flag=True)
         else:
             return render_template('login.html')
     else:
@@ -48,13 +62,70 @@ def signup():
         #ab check karo ki if vo already table mai hi ki nahi, nahi hain toh daalo 
         ## abhi kal idhar update krna hain ##
         ## ## 
-        ## ## 
+        ## ##   
         if name=='admin':
             return render_template('signup.html',flag=True)
-        return redirect('/login')
+        sponsors = Sponsors.query.all()
+        flag = False
+        for i in sponsors:
+            if i.username==name:
+                flag = True
+        if flag:
+            return render_template('signup.html',flag=True)
+        influencers = Influencer.query.all()
+        for i in influencers:
+            if i.username==name:
+                flag = True
+        if flag:
+            return render_template('signup.html',flag=True)
+        else:
+            session['tempuname'] = name
+            session['temppass'] = password
+            return redirect('/type')
     else:
         return render_template('signup.html',flag=False)
-    
+
+@app.route('/type',methods=['GET','POST'])
+def type():
+    if request.method=='POST':
+        if 'tempuname' in session:
+            if 'sponsor' in request.form:
+                session['temptype'] = 'sponsor'
+            else:
+                session['temptype'] = 'influencer'
+            return redirect('/details')
+            #add userna me password and type
+        else:
+            return redirect('/signup')
+    else:
+        return render_template('choice.html')
+
+@app.route('/details',methods=['GET','POST'])
+def enterdetails():
+    if request.method=='POST':
+        if session['temptype']=='sponsor':
+            name = request.form['name']
+            industry = request.form['industrycategory']
+            budget = request.form['budgetreach']
+            newsponsor = Sponsors(username=session['tempuname'],password=session['temppass'],companyname=name,industry=industry,budget=budget)
+            db.session.add(newsponsor)
+        else:
+            name = request.form['name']
+            category = request.form['industrycategory']
+            reach = request.form['budgetreach']
+            newinfluencer = Influencer(username=session['tempuname'],password=session['temppass'],name=name,category=category,reach=reach)
+            db.session.add(newinfluencer)
+        #add to database
+        #session pop bhi krna hain 
+        db.session.commit()
+        session.pop('temptype',None)
+        session.pop('tempuname',None)
+        session.pop('temppass',None)
+        return redirect('/login')
+    else:
+        if 'temptype' not in session:
+            return redirect('/signup')
+        return render_template('enterdetails.html',type=session['temptype'])
 #sign up mai usernmae cannot be that from sponsor or influencer or admin 
 @app.route('/contact',methods=['GET','POST'])
 def contact():
@@ -85,5 +156,7 @@ def dashbord():
         return render_template('infludash.html')
     else:
         return render_template('sponsordash.html')
+    
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log in to ADFinder</title>
+        <link rel = "stylesheet" href = "/static/css/enterdetails.css">
+        <!--add a icon here for the website-->
+        <!--also in others , add useful info such as db er model and all-->
+    </head>
+    <body>
+        <nav>
+            <ul class="navbar">
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </nav>
+        <div class="decor">
+            <h1><b>Welcome to AD Finder</b></h1>
+            <br>
+            <div class="about">
+                <p>We can help you find a campaign Or help you spread your campaign</p>
+                <p>made for Sponsors and influencers.</p>
+            </div>
+        </div>
+        <div class="content">
+            <h1 style="text-align: center;">Details</h1>
+            {% if type=='sponsor' %}
+                <form onsubmit="return validate()" method="POST" name="form">
+                    Company Name : <input type = "text" name = 'name' required>
+                    <br>
+                    Industry : <input type = "text" name = 'industrycategory' required>
+                    <br>
+                    Total Budget : <input type = "number" name = 'budgetreach' required>
+                    <br><br>
+                    <input type = "submit" value = "submit">    
+                </form>
+            {% else %}
+                <form onsubmit="return validate()" method="POST" name="form">
+                    Channel Name : <input type = "text" name = 'name' required>
+                    <br>
+                    Category : <input type = "text" name = 'industrycategory' required>
+                    <br>
+                    Reach(Thousands) : <input type = "number" name = 'budgetreach' required>
+                    <br><br>
+                    <input type = "submit" value = "submit">    
+                </form>
+            {% endif %}
+        </div>
+    </body>
+</html>
