@@ -24,8 +24,8 @@ class Influencer(db.Model):
 class Campaign(db.Model):
     __tablename__ = 'campaign'
     campaignID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    sponsorname = db.Column(db.String,nullable = False,unique = True)
-    campaignname = db.Column(db.String,nullable = False,unique = True)
+    sponsorname = db.Column(db.String,nullable = False,unique = True) #ye id hain name nahi 
+    campaignname = db.Column(db.String,nullable = False,unique = True) #ye name hain 
     companyname = db.Column(db.String,nullable = False,unique=True)
     flag = db.Column(db.Integer,nullable=False) #if flagged then the campaign wont be shown anymore 
 
@@ -33,14 +33,13 @@ class CampaignRequests(db.Model):
     __tablename__ = 'requests'
     requestID = db.Column(db.Integer,primary_key = True,autoincrement = True)
     campaignname = db.Column(db.Integer)
-    influencername = db.Column(db.String)
-    sponsorname = db.Column(db.String)
-    name = db.Column(db.String)
+    influencername = db.Column(db.String) #ye username hain
+    sponsorname = db.Column(db.String) #ye username hain 
+    name = db.Column(db.String) #currently kaunse username ke page par dikhana hain 
     payment = db.Column(db.Integer)
     addetails = db.Column(db.String)
     companyname = db.Column(db.String)
-    reqtype = db.Column(db.String) #of 4 types,1. influencer asked the sponsor,2. Sponsor asked the influencer
-    #along with accepted yet or not accepted yet if not accepted , it should be displayed on that persons homepage 
+    reqtype = db.Column(db.String) 
 
 #contact us wale page pe ye hoga 
 class Queries(db.Model):

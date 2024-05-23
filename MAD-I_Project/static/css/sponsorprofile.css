@@ -49,7 +49,7 @@ a img{
     width: 35px;
     height: 35px;
     margin: -8px;
-    position: absolute;
+    position:absolute;
 }
 .request{
     position: relative;
@@ -95,6 +95,18 @@ a img{
     border: none;
     cursor: pointer;
 }
-.btn:hover{
-    opacity: 70%;
+.container{
+    display: flex;
+    align-items: center;
+    margin-left: 10%;
+    margin-bottom: 20px;
+}
+.pic{
+    width: 20%;
+    height: 20%;
+    margin-right: 50px;
+}
+.info{
+    font-size: 18px;
+    margin: 5px 0;
 }

@@ -162,17 +162,41 @@ def infludash():
         db.session.commit()
         return redirect('/infludash')
     
+@app.route('/profile')
+def selfprofile():
+    if 'userid' not in session or session['userid']=="admin":
+        return redirect('/dashbord')
+    else:
+        s = '/profile/'+session['userid']
+        return redirect(s)
+    
+@app.route('/profile/<string:s>')
+def profile(s):
+    L = Sponsors.query.filter_by(username=s).all()
+    L1 = Influencer.query.filter_by(username=s).all()
+    if len(L1)==1:
+        L2 = CampaignRequests.query.filter_by(influencername=s).all()
+        L = Influencer.query.filter_by(username=s).all()
+        L = L[0]
+        return render_template('influprofile.html',waitinglist=L2,L=L)
+    else:
+        L2 = CampaignRequests.query.filter_by(sponsorname=s).all()
+        L3 = Campaign.query.filter_by(sponsorname=s).all()
+        L = Sponsors.query.filter_by(username=s).all()
+        L = L[0]
+        return render_template('sponsorprofile.html',waitinglist=L2,L=L,L3=L3)
 if __name__ == '__main__':
     app.run(debug=True)
 
-
+#kal search user wala page banana, give campaign wala option dono ke pas rakhna par agar influencer dabayega toh dashbord
+#ending main comments dalna hain explaining each step to make it more understandable 
 #dashbord for influencer 
-#dashbord for admin - should contain query as well - and all the accepted rejected and w requests
+#dashbord for admin - should contain query as well - and all the accepted rejected and cancel requests
 #signed in page 
 #search users 
 #browse campaigns 
 #create campaigns 
-#login main add kro ki login hoga if user is not flagged which admin can do 
-#in admin add option flag a user then ask to search the user
-#contact us page banana hain 
-#profile ka page banao , wo abhi mai pahle karunga 
+#in admin add option flag a campaign after searching it , ya toh ek search ka common page banao , with flag var for admin
+#contact.html banana hain 
+#search main flagged wale mat dikhao , profile mai toh kr diya alrdy 
+#search influencers ke bad , use dropdown menu se tum vo de skte ho jo campaigns flagged nahi hain -> assign krne ke liye

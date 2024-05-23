@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/static/css/infludash.css">
+    <title>{{L.name}}</title>
+    <link rel="stylesheet" href="/static/css/influprofile.css">
     <script src = "/static/js/infludash.js"></script>
 </head>
 <body>
@@ -12,12 +12,24 @@
             <li><a href="/users" class="border1">Search Users</a></li>
             <li><a href="/campaigns" class="border1">Browse/Create Campaigns</a></li>
             <li><a href="/contact" class="border1">Contact Us</a></li>
-            <li><a href="/profile"><img src="/static/profilepic.png"></a></li>
+            <li><a href="/profile"><img src="/static/pfpc.png"></a></li>
             <li><a href="/logout" class="border1">Log Out</a></li>
         </ul>
     </nav>
     <br>
-    <h1 style="text-align:center;">{{waitinglist|length}} New AD Requests</h1>
+    <h1 style="text-align:center;">Influencer Profile</h1>
+    <br>
+    <div class="container">
+        <img src="/static/pfpc.png" class="pic">
+        <div class="info">
+            <p>Username : {{L.username}}</p>
+            <p>Name : {{L.name}}</p>
+            <p>Category : {{L.category}}</p>
+            <p>Reach : {{L.reach}}K veiwers</p>
+        </div>
+    </div>
+    <br>
+    <h1 style="text-align:center;">{{waitinglist|length}} Past AD Requests</h1>
     <br>
     {% for i in waitinglist %}
         <br>
@@ -26,31 +38,23 @@
                 <h3>{{waitinglist.index(i)+1}} : {{i.campaignname}}</h3>
             </div>
             <div class="request-content">
-                <h1 style="text-align: center;">AD Request Details</h1>
+                <h1 style="text-align: center;">AD Details</h1>
                 <div style="font-size: small;margin:1%;">
                     <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
                     <p>Company Name : {{i.companyname}}</p>
                     <p>Payment : {{i.payment}}</p>
                     <p>AD Details : {{i.addetails}}</p>
+                    <p>Status : 
+                    {% if i.reqtype=='A' %}
+                        <input type="button" class="btn" style="background-color: rgb(83, 236, 83);" value="Accepted">
+                    {% elif i.reqtype=='R' %}
+                        <input type="button" class="btn" style="background-color: rgb(255, 11, 11);" value="Rejected">
+                    {% else %}
+                        <input type="button" class="btn" style="background-color: rgb(55, 63, 215);" value="Pending">
+                    {% endif %}
+                    </p>
                 </div>
-            </div>
-            <div class="request-options">
-                <br><br>
-                <form method="POST">
-                    <input type="hidden" name="reqID" value="{{i.requestID}}" required>
-                    Modify Payment : &nbsp;&nbsp;&nbsp;&nbsp; 
-                    <input type="number" class="btn" name="budget" style="width:10%;color:black;" value="{{i.payment}}">
-                    &nbsp;&nbsp;
-                    <input type="submit" class="btn" style="background-color: blue;" value="Modify" name="modify">
-                </form>
-                <br>
-                <form method="POST">
-                    <input type="hidden" name="reqID" value="{{i.requestID}}">
-                    <input type="submit" class="btn" style="background-color: rgb(83, 236, 83);" value="Accept" name="accept">
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" class="btn" style="background-color: rgb(255, 11, 11);" value="Reject" name="reject">
-                </form>
-            </div>    
+            </div>  
         </div>
     {% endfor %}
     <br>
