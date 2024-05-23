@@ -3,6 +3,7 @@ from flask import session
 from table import *
 import jinja2
 
+## done ## 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.sqlite3"
 db.init_app(app)
@@ -16,21 +17,18 @@ with app.app_context():
 def index():
     return render_template('index.html')
 
-#abhi ye krna hai 
 @app.route('/login',methods=['GET','POST'])
 def login():
     if 'userid' not in session:
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
-            #first check if the username and password are correct or not 
             if username=='admin' and password=='#pas123':
                 session['userid'] = username
                 session['password'] = password
                 session['type'] = 'admin'
                 return redirect('/dashbord')
             else:
-                #check karo if true
                 sponsors = Sponsors.query.all()
                 for i in sponsors:
                     if i.username==username and i.password==password:
@@ -45,13 +43,11 @@ def login():
                         session['password'] = password
                         session['type'] = 'influencer'
                         return redirect('/dashbord')
-                #agar sponsor hain toh sponsordashbord karo warna fir influencer dashbord 
-                #agar exist nahi krta tohi krna hain 
             return render_template('login.html',flag=True)
         else:
             return render_template('login.html')
     else:
-        #return the fact that user has already logged in 
+        #loggedin.html banao basic sa easy hi hoga 
         return render_template('loggedin.html',name=session['userid'])
 
 @app.route('/signup',methods=['GET','POST'])
@@ -59,10 +55,6 @@ def signup():
     if request.method=='POST':
         name = request.form['username']
         password = request.form['password']
-        #ab check karo ki if vo already table mai hi ki nahi, nahi hain toh daalo 
-        ## abhi kal idhar update krna hain ##
-        ## ## 
-        ## ##   
         if name=='admin':
             return render_template('signup.html',flag=True)
         sponsors = Sponsors.query.all()
@@ -94,7 +86,6 @@ def type():
             else:
                 session['temptype'] = 'influencer'
             return redirect('/details')
-            #add userna me password and type
         else:
             return redirect('/signup')
     else:
@@ -115,8 +106,6 @@ def enterdetails():
             reach = request.form['budgetreach']
             newinfluencer = Influencer(username=session['tempuname'],password=session['temppass'],name=name,category=category,reach=reach)
             db.session.add(newinfluencer)
-        #add to database
-        #session pop bhi krna hain 
         db.session.commit()
         session.pop('temptype',None)
         session.pop('tempuname',None)
@@ -126,7 +115,19 @@ def enterdetails():
         if 'temptype' not in session:
             return redirect('/signup')
         return render_template('enterdetails.html',type=session['temptype'])
-#sign up mai usernmae cannot be that from sponsor or influencer or admin 
+
+@app.route('/logout')
+def logout():
+    session.pop('userid',None)
+    session.pop('password',None)
+    session.pop('type',None)
+    return redirect('/')
+
+## till here ## 
+#done sign up login , just add siggnedin.html in this 
+
+## to do ##
+#add dashbord for different kinds kaafi time taking hoga 
 @app.route('/contact',methods=['GET','POST'])
 def contact():
     if request.method=='POST':
@@ -137,26 +138,30 @@ def contact():
         #using js check if they given things are ok or not 
         #if ok then add it to this database 
     return render_template('contact.html')
-#contact krke admin se baat kr skte hain 
-#and agar loggined nahi hain and then dashbord pe jane ki koshish kar rahe ho toh redirect to index 
-@app.route('/logout')
-def logout():
-    session.pop('userid',None)
-    session.pop('password',None)
-    session.pop('type',None)
-    return redirect('/')
+    #contact krke admin se baat kr skte hain 
 
 @app.route('/dashbord')
 def dashbord():
     if 'type' not in session:
         return redirect('/')
     if session['type']=='admin':
-        return render_template('admindash.html')
+        #jo bhi hain datbase mai limit 10 krke daldo as latest bolke 
+        return render_template('/admindash')
+        #admindash mai mai queries dikha sakta hu 
     elif session['type']=='influencer':
-        return render_template('infludash.html')
+        #sare Waiting mai jo bhi hai , har ek ko waie decline kr skte hain 
+        return redirect('/infludash')
     else:
-        return render_template('sponsordash.html')
+        return render_template('/sponsordash')
     
+@app.route('/infludash')
+def infludash():
+    if session['type']!='influencer':
+        return redirect('/dashbord')
+    L = CampaignRequests.query.filter_by(name=session['userid'],reqtype='W').all()
+    #abhi sare div ke aage ek button dalna hain accept aur reject krne ka ya fir price change krne ka
+    # req type can be Waiting,Accepted,Rejected
+    return render_template('infludash.html',waitinglist=L)
 
 if __name__ == '__main__':
     app.run(debug=True)

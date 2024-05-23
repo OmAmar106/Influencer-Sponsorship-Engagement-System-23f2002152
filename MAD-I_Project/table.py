@@ -24,15 +24,18 @@ class Influencer(db.Model):
 class Campaign(db.Model):
     __tablename__ = 'campaign'
     campaignID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    sponsorID = db.Column(db.String,nullable = False,unique = True)
+    sponsorname = db.Column(db.String,nullable = False,unique = True)
     campaignname = db.Column(db.String,nullable = False,unique = True)
     flag = db.Column(db.Integer,nullable=False) #if flagged then the campaign wont be shown anymore 
 
 class CampaignRequests(db.Model):
     __tablename__ = 'requests'
     requestID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    campaignID = db.Column(db.Integer)
-    influencerID = db.Column(db.String)
+    campaignname = db.Column(db.Integer)
+    influencername = db.Column(db.String)
+    sponsorname = db.Column(db.String)
+    name = db.Column(db.String)
+    payment = db.Column(db.Integer)
     reqtype = db.Column(db.String) #of 4 types,1. influencer asked the sponsor,2. Sponsor asked the influencer
     #along with accepted yet or not accepted yet if not accepted , it should be displayed on that persons homepage 
 
@@ -45,3 +48,4 @@ class Queries(db.Model):
     emailid = db.Column(db.String)  
 
 #add a feature in which admin can ban a person just use delete from table ... where .. 
+#jaruvat padi toh ek ad krke bhi bana dena table
