@@ -36,6 +36,7 @@ class CampaignRequests(db.Model):
     sponsorname = db.Column(db.String)
     name = db.Column(db.String)
     payment = db.Column(db.Integer)
+    addetails = db.Column(db.String)
     reqtype = db.Column(db.String) #of 4 types,1. influencer asked the sponsor,2. Sponsor asked the influencer
     #along with accepted yet or not accepted yet if not accepted , it should be displayed on that persons homepage 
 

@@ -19,7 +19,9 @@ nav{
     margin: 0 15px;
     padding: 10px;
 }
-a,.navbar li a {
+.navbar li a {
+    border:solid gray;
+    padding:10px;
     text-decoration: none;
     color: white;
     font-size: 20px;

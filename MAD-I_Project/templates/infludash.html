@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <link rel = "stylesheet" href = "/static/css/infludash.css">
+        <!--add a icon here for the website-->
+        <!--also in others , add useful info such as db er model and all-->
+    </head>
+    <body>
+        <nav>
+            <ul class="navbar">
+                <li><a href="/dashbord" class="border1">Dashboard</a></li>
+                <li><a href="/users" class="border1">Search Users</a></li>
+                <li><a href="/campaigns" class="border1">Browse Campaigns</a></li>
+                <li><a href="/contact" class="border1">Contact Us</a></li>
+                <li><a href="/profile"><img src="/static/profilepic.png"></a></li>
+            </ul>
+        </nav>
+        <br>
+        <h1 style="text-align:center;">New Campaign Requests</h1>
+        <br>
+        <br>
+        <div class="request">
+            <div class="request-content">
+                <a href="/profile/" style="color:black;text-decoration: underline;"><h1>Sponsor Name</h1></a>
+                <h3 style="color:blue;">Campaign Name by Company Name</h3>
+                <h2>Ad Description</h2>
+                <p style="font-size:medium;">Deatils of the ad will be given here like the amount of time till when you have to do it and how you have to do it</p>
+            </div>
+            <div class="request-options">
+                <span style="color:red;">Payment :</span>
+                <form method="POST">
+                    <input type="number" class="btn" name="budget" style="width:76%;color:black;" value="10">
+                    <input type="submit" class="btn" style="background-color: blue;" value="Modify" name="modify">
+                </form>
+                <br>
+                <form method="POST">
+                    <input type="submit" class="btn" style="background-color: rgb(83, 236, 83);" value="Accept" name="accept"><br>
+                    <input type="submit" class="btn" style="background-color: rgb(255, 11, 11);" value="Reject" name="reject"><br>
+                </form>
+            </div>    
+        </div>
+    </body>
+</html>

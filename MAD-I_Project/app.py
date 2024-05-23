@@ -165,3 +165,10 @@ def infludash():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+
+
+#abhi wapas aake ye krnna hai ki jo table mai hain wahi infludash mai aaye naaki random chise 
