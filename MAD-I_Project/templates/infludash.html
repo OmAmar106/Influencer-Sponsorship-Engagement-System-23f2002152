@@ -1,44 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Dashboard</title>
-        <link rel = "stylesheet" href = "/static/css/infludash.css">
-        <!--add a icon here for the website-->
-        <!--also in others , add useful info such as db er model and all-->
-    </head>
-    <body>
-        <nav>
-            <ul class="navbar">
-                <li><a href="/dashbord" class="border1">Dashboard</a></li>
-                <li><a href="/users" class="border1">Search Users</a></li>
-                <li><a href="/campaigns" class="border1">Browse Campaigns</a></li>
-                <li><a href="/contact" class="border1">Contact Us</a></li>
-                <li><a href="/profile"><img src="/static/profilepic.png"></a></li>
-            </ul>
-        </nav>
-        <br>
-        <h1 style="text-align:center;">New Campaign Requests</h1>
-        <br>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/css/infludash.css">
+    <script src = "/static/js/infludash.js"></script>
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/dashbord" class="border1">Dashboard</a></li>
+            <li><a href="/users" class="border1">Search Users</a></li>
+            <li><a href="/campaigns" class="border1">Browse Campaigns</a></li>
+            <li><a href="/contact" class="border1">Contact Us</a></li>
+            <li><a href="/profile"><img src="/static/profilepic.png"></a></li>
+        </ul>
+    </nav>
+    <br>
+    <h1 style="text-align:center;">{{waitinglist|length}} New Campaign Requests</h1>
+    <br>
+    {% for i in waitinglist %}
         <br>
         <div class="request">
+            <div class="request-header">
+                <h3>{{waitinglist.index(i)+1}} : {{i.campaignname}}</h3>
+            </div>
             <div class="request-content">
-                <a href="/profile/" style="color:black;text-decoration: underline;"><h1>Sponsor Name</h1></a>
-                <h3 style="color:blue;">Campaign Name by Company Name</h3>
-                <h2>Ad Description</h2>
-                <p style="font-size:medium;">Deatils of the ad will be given here like the amount of time till when you have to do it and how you have to do it</p>
+                <h1 style="text-align: center;">AD Request Details</h1>
+                <div style="font-size: small;margin:1%;">
+                    <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
+                    <p>Company Name : {{i.companyname}}</p>
+                    <p>Payment : {{i.payment}}</p>
+                    <p>AD Details : {{i.addetails}}</p>
+                </div>
             </div>
             <div class="request-options">
-                <span style="color:red;">Payment :</span>
+                <br><br>
                 <form method="POST">
-                    <input type="number" class="btn" name="budget" style="width:76%;color:black;" value="10">
+                    <input type="hidden" name="reqID" value="{{i.requestID}}" required>
+                    Modify Payment : &nbsp;&nbsp;&nbsp;&nbsp; 
+                    <input type="number" class="btn" name="budget" style="width:10%;color:black;" value="{{i.payment}}">
+                    &nbsp;&nbsp;
                     <input type="submit" class="btn" style="background-color: blue;" value="Modify" name="modify">
                 </form>
                 <br>
                 <form method="POST">
-                    <input type="submit" class="btn" style="background-color: rgb(83, 236, 83);" value="Accept" name="accept"><br>
-                    <input type="submit" class="btn" style="background-color: rgb(255, 11, 11);" value="Reject" name="reject"><br>
+                    <input type="hidden" name="reqID" value="{{i.requestID}}">
+                    <input type="submit" class="btn" style="background-color: rgb(83, 236, 83);" value="Accept" name="accept">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" class="btn" style="background-color: rgb(255, 11, 11);" value="Reject" name="reject">
                 </form>
             </div>    
         </div>
-    </body>
+    {% endfor %}
+    <br>
+    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a campaign for more details</p>
+</body>
 </html>

@@ -3,7 +3,6 @@ from flask import session
 from table import *
 import jinja2
 
-## done ## 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.sqlite3"
 db.init_app(app)
@@ -47,7 +46,7 @@ def login():
         else:
             return render_template('login.html')
     else:
-        #loggedin.html banao basic sa easy hi hoga 
+        ####
         return render_template('loggedin.html',name=session['userid'])
 
 @app.route('/signup',methods=['GET','POST'])
@@ -123,52 +122,57 @@ def logout():
     session.pop('type',None)
     return redirect('/')
 
-## till here ## 
-#done sign up login , just add siggnedin.html in this 
-
-## to do ##
-#add dashbord for different kinds kaafi time taking hoga 
 @app.route('/contact',methods=['GET','POST'])
 def contact():
     if request.method=='POST':
-        #save krdo info 
         name = request.form['name']
         query = request.form['query']
         email = request.form['email']
-        #using js check if they given things are ok or not 
-        #if ok then add it to this database 
+    ####
     return render_template('contact.html')
-    #contact krke admin se baat kr skte hain 
 
 @app.route('/dashbord')
 def dashbord():
     if 'type' not in session:
         return redirect('/')
     if session['type']=='admin':
-        #jo bhi hain datbase mai limit 10 krke daldo as latest bolke 
         return render_template('/admindash')
-        #admindash mai mai queries dikha sakta hu 
     elif session['type']=='influencer':
-        #sare Waiting mai jo bhi hai , har ek ko waie decline kr skte hain 
         return redirect('/infludash')
     else:
         return render_template('/sponsordash')
     
-@app.route('/infludash')
+@app.route('/infludash',methods=['POST','GET'])
 def infludash():
-    if session['type']!='influencer':
-        return redirect('/dashbord')
-    L = CampaignRequests.query.filter_by(name=session['userid'],reqtype='W').all()
-    #abhi sare div ke aage ek button dalna hain accept aur reject krne ka ya fir price change krne ka
-    # req type can be Waiting,Accepted,Rejected
-    return render_template('infludash.html',waitinglist=L)
-
+    if request.method=='GET':
+        if session['type']!='influencer':
+            return redirect('/dashbord')
+        L = CampaignRequests.query.filter_by(name=session['userid'],reqtype='W').all()
+        return render_template('infludash.html',waitinglist=L)
+    else:
+        L = CampaignRequests.query.filter_by(requestID=request.form['reqID'])
+        L = L[0]
+        if 'accept' in request.form:
+            L.reqtype = 'A'
+        elif 'reject' in request.form:
+            L.reqtype = 'R'
+        else:
+            L.payment = request.form['budget']
+            L.name = L.sponsorname
+        db.session.commit()
+        return redirect('/infludash')
+    
 if __name__ == '__main__':
     app.run(debug=True)
 
 
-
-
-
-
-#abhi wapas aake ye krnna hai ki jo table mai hain wahi infludash mai aaye naaki random chise 
+#dashbord for influencer 
+#dashbord for admin - should contain query as well - and all the accepted rejected and w requests
+#signed in page 
+#search users 
+#browse campaigns 
+#create campaigns 
+#login main add kro ki login hoga if user is not flagged which admin can do 
+#in admin add option flag a user then ask to search the user
+#contact us page banana hain 
+#profile ka page banao , wo abhi mai pahle karunga 
