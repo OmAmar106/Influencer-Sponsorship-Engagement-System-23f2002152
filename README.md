@@ -10,5 +10,5 @@ It is a Influencer Sponsorship System, it has the following features:<br><br>
 6. It also has its own api , through which you can request for ad , campaign or user details. 
 <hr><br>
 Technologies Used : Flask(Python Framework) , Python , HTML , CSS and JS. 
-<hr>
+<hr><br>
 Images will be added soon and the website will also be hosted.
