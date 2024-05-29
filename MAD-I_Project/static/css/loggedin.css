@@ -1,0 +1,39 @@
+body, ul, li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: Arial;
+}
+body{
+    background-image: url(/static/bg.gif);
+}
+nav{
+    background-color: rgba(51, 51, 51, 0.7);
+}
+.navbar{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 50px;
+}
+.navbar li {
+    margin: 0 15px;
+    padding: 10px;
+}
+.navbar li a {
+    border:solid gray;
+    padding:10px;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+.navbar li a:hover {
+    border: solid white;
+    padding: 10px;
+    color: white;
+    transform: scale(1.1);
+}
+p{
+    color:white;
+    font-size: 150%;
+    text-align: center;
+}

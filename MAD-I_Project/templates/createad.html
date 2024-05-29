@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Ad</title>
+    <link rel="stylesheet" href="/static/css/createad.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/dashbord" class="border1">Dashboard</a></li>
+            <li><a href="/users" class="border1">Search Users</a></li>
+            <li><a href="/campaigns" class="border1">Browse/Create Campaigns</a></li>
+            <li><a href="/contact" class="border1">Contact Us</a></li>
+            <li><a href="/profile"><img src="/static/pfpc.png"></a></li>
+            <li><a href="/logout" class="border1">Log Out</a></li>
+        </ul>
+    </nav>
+    <br>
+    <h1>Request Ad</h1>
+    <form method="POST" style="text-align: center;">
+        <h2>Enter Ad Details</h2> 
+        <br>
+        Campaign Name : 
+        <select name="options">
+            {% for i in L %}
+                <option value="{{i.campaignname}}">{{i.campaignname}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        Enter Influencer Username : <input type="text" name="influencername" required>
+        <br>
+        Enter Ad Details : <input type="textarea" value="" name="details">
+        <br>
+        Enter Payment :  <input type="number" value="0" name="budget" required>
+        <br><br><br>
+        <input type="submit" class="btn" value="Request Ad">
+    </form>
+</body>
+</html>

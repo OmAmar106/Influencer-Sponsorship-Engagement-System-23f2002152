@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search for users</title>
+    <link rel="stylesheet" href="/static/css/users.css">
+    <script src = "/static/js/infludash.js"></script>
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/dashbord" class="border1">Dashboard</a></li>
+            <li><a href="/users" class="border1">Search Users</a></li>
+            <li><a href="/campaigns" class="border1">Browse/Create Campaigns</a></li>
+            <li><a href="/contact" class="border1">Contact Us</a></li>
+            <li><a href="/profile"><img src="/static/profilepic.png"></a></li>
+            <li><a href="/logout" class="border1">Log Out</a></li>
+        </ul>
+    </nav>
+    <form method="POST">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" style="width:30%;">
+            <label for="type">Select Type:</label>
+            <select id="type" name="type" onchange="change()">
+                <option value="">Select</option>
+                <option value="influencer">Influencer</option>
+                <option value="sponsor">Sponsor</option>
+            </select>
+        </div>
+        <div id="influencer-input" style="display:none;">
+            <label for="followers">Minimum Reach (in K): </label>
+            <input type="number" id="followers" name="followers">&nbsp;
+            <label for="category">Category : </label>
+            <select id="type" name="category">
+                <option value="">Select</option>
+                {% for i in category %}
+                    <option value="{{i.category}}">{{i.category}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div id="sponsor-input" style="display:none;">
+            <label for="budget">Minimum Budget: </label>
+            <input type="number" id="budget" name="budget">
+        </div>
+        <input type="submit" value="Filter">
+    </form>
+    <br>
+    <h1 style="text-align:center;">Users Found</h1>
+    <br>
+    {% for i in influencer %}
+        {% if st=='' or st in i.username %}
+            <br>
+            <div class="request">
+                <div class="request-header">
+                    <h3>{{i.name}}</h3>
+                </div>
+                <div class="request-content">
+                    <h1 style="text-align: center;">User Details</h1>
+                    <div style="font-size: small;margin:1%;">
+                        <a href="/profile/{{i.username}}" style="color:white;text-decoration: none;"><p>Username : <span style="color:blue;text-decoration: underline;">{{i.username}}</span></p></a>
+                        <p>User Type : Influencer</p>
+                        <p>Category : {{i.category}}</p>
+                        <p>Reach(in K) : {{i.reach}}</p>
+                        <p>Niche : {{i.niche}}</p>
+                    </div>
+                </div>  
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% for i in sponsor %}
+        {% if st=='' or st in i.username %}
+            <br>
+            <div class="request">
+                <div class="request-header">
+                    <h3>{{i.username}}</h3>
+                </div>
+                <div class="request-content">
+                    <h1 style="text-align: center;">User Details</h1>
+                    <div style="font-size: small;margin:1%;">
+                        <a href="/profile/{{i.username}}" style="color:white;text-decoration: none;"><p>Username : <span style="color:blue;text-decoration: underline;">{{i.username}}</span></p></a>
+                        <p>User Type : Sponsor</p>
+                        <p>Company Name : {{i.companyname}}</p>
+                        <p>Industry : {{i.industry}}</p>
+                        <p>Budget : {{i.budget}}</p>
+                    </div>
+                </div>  
+            </div>
+        {% endif %}
+    {% endfor %}
+    <br>
+    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a user for more details</p>
+</body>
+</html>

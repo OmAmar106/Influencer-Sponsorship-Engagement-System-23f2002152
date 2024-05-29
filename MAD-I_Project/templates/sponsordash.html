@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/static/css/infludash.css">
+    <link rel="stylesheet" href="/static/css/sponsordash.css">
     <script src = "/static/js/infludash.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
         </ul>
     </nav>
     <br>
-    <h1 style="text-align:center;">{{waitinglist|length}} New AD Requests</h1>
+    <h1 style="text-align:center;">{{waitinglist|length}} New AD Modification Requests</h1>
     <br>
     {% for i in waitinglist %}
         <br>
@@ -26,9 +26,9 @@
                 <h3>{{waitinglist.index(i)+1}} : {{i.campaignname}}</h3>
             </div>
             <div class="request-content">
-                <h1 style="text-align: center;">AD Request Details</h1>
+                <h1 style="text-align: center;">AD Modifications Details</h1>
                 <div style="font-size: small;margin:1%;">
-                    <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
+                    <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Influencer Name : <span style="color:blue;text-decoration: underline;">{{i.influencername}}</span></p></a>
                     <p>Company Name : {{i.companyname}}</p>
                     <p>Payment : {{i.payment}}</p>
                     <p>AD Details : {{i.addetails}}</p>

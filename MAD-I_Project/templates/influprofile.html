@@ -24,8 +24,18 @@
         <div class="info">
             <p>Username : {{L.username}}</p>
             <p>Name : {{L.name}}</p>
-            <p>Category : {{L.category}}</p>
-            <p>Reach : {{L.reach}}K veiwers</p>
+            {% if flag %}
+                <form method="POST">
+                    <p>Category : <input type="text" value="{{L.category}}" class="btn" style="font-size:80%;color:black;" name="category" required></p>
+                    <p>Reach : <input type="number" value="{{L.reach}}" class="btn" style="font-size:80%;color:black;width:10%;" name="reach" required>K veiwers</p>
+                    <p>Niche : <input type="text" value="{{L.niche}}" class="btn" style="font-size:80%;color:black;" name="niche"></p>                    
+                    <input type="submit" value="Update Profile" class="btn" style="background-color:blue;">
+                </form>
+            {% else %}
+                <p>Category : {{L.category}}</p>
+                <p>Reach : {{L.reach}}K veiwers</p>
+                <p>Niche : {{L.niche}}</p>
+            {% endif %}
         </div>
     </div>
     <br>
@@ -58,6 +68,6 @@
         </div>
     {% endfor %}
     <br>
-    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a campaign for more details</p>
+    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on an AD for more details</p>
 </body>
 </html>

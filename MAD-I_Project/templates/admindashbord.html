@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/css/admindashbord.css">
+    <script src = "/static/js/infludash.js"></script>
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/dashbord" class="border1">Dashboard</a></li>
+            <li><a href="/users" class="border1">Search Users</a></li>
+            <li><a href="/campaigns" class="border1">Browse/Create Campaigns</a></li>
+            <li><a href="/contact" class="border1">Contact Us</a></li>
+            <li><a href="/profile"><img src="/static/profilepic.png"></a></li>
+            <li><a href="/logout" class="border1">Log Out</a></li>
+        </ul>
+    </nav>
+    <br>
+    <ul class="navbar" style="margin-right:20%;">
+        <li><input type="button" class="border1" style="color:black;" value="Ban a User" onclick="toggle1()"></li>
+        <li><input type="button" class="border1" style="color:black;" value="AD Requests" onclick="toggle2()"></li>
+        <li><input type="button" class="border1" style="color:black;" value="Campaigns" onclick="toggle3()"></li>
+        <li><input type="button" class="border1" style="color:black;" value="Stats of website" onclick="toggle4()"></li>
+    </ul>
+    <br>
+    <div id="banuser" style="display:none;">
+        <br>
+        <h2 style="text-align:center;">Ban User</h2>
+        <form method="POST">
+            <p>Enter Name : </p><input type="text" name="name" required class="btn" style="color:black;"><br><br>
+            <br><input type="submit" value="ban" class="btn" style="background-color:red;">
+        </form>
+    </div>
+    <div id="adreq" style="display:none;">
+        <h1 style="text-align:center;">{{waitinglist|length}} AD Requests</h1>
+        <br>
+        {% for i in waitinglist %}
+            <br>
+            <div class="request">
+                <div class="request-header">
+                    <h3>{{waitinglist.index(i)+1}} : {{i.campaignname}}</h3>
+                </div>
+                <div class="request-content">
+                    <h1 style="text-align: center;">AD Request Details</h1>
+                    <div style="font-size: small;margin:1%;">
+                        <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
+                        <a href="/profile/{{i.influencername}}" style="color:white;text-decoration: none;"><p>Influencer Name : <span style="color:blue;text-decoration: underline;">{{i.influencername}}</span></p></a>
+                        <p>Company Name : {{i.companyname}}</p>
+                        <p>Payment : {{i.payment}}</p>
+                        <p>AD Details : {{i.addetails}}</p>
+                        <p>Status : 
+                        {% if i.reqtype=='A' %}
+                            <input type="button" class="btn" style="background-color: rgb(83, 236, 83);" value="Accepted">
+                        {% elif i.reqtype=='R' %}
+                            <input type="button" class="btn" style="background-color: rgb(255, 11, 11);" value="Rejected">
+                        {% else %}
+                            <input type="button" class="btn" style="background-color: rgb(55, 63, 215);" value="Pending">
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>  
+            </div>
+        {% endfor %}
+        <br>
+        <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on an ad for more details</p>
+    </div>
+    <div id="campaignreq" style="display:none;">
+        <h1 style="text-align:center;">{{waitinglist1|length}} Campaigns</h1>
+        <br>
+        {% for i in waitinglist1 %}
+            <br>
+            <div class="request">
+                <div class="request-header">
+                    <h3>{{waitinglist1.index(i)+1}} : {{i.campaignname}}</h3>
+                </div>
+                <div class="request-content">
+                    <h1 style="text-align: center;">AD Request Details</h1>
+                    <div style="font-size: small;margin:1%;">
+                        <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
+                        <p>Company Name : {{i.companyname}}</p>
+                        <p>Budget : {{i.budget}}</p>
+                        <p>Start Date : {{i.startdate}}</p>
+                        <p>Niche : {{i.niche}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
+        <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a campaign for more details</p>
+    </div>
+    <div id="stats" style="display:block;">
+        <div class="stats">
+            <div class="float">
+                <p>Total Users</p> <input type="button" value="{{a+b}}" style="background-color: orange;">
+            </div>
+            <div class="float">
+                <p>Total Influencers</p> <input type="button" value="{{a}}" style="background-color: yellow;">
+            </div>
+            <div class="float">
+                <p>Total Sponsors</p> <input type="button" value="{{b}}" style="background-color: yellowgreen;">
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="stats">
+            <div class="float">
+                <p>Total Accepted Ads</p> <input type="button" value="{{c}}" style="background-color: rgb(40, 224, 40);">
+            </div>
+            <div class="float">
+                <p>Total Rejected Ads</p> <input type="button" value="{{d}}" style="background-color: red;">
+            </div>
+            <div class="float">
+                <p>Total Requested Ads</p> <input type="button" value="{{e}}" style="background-color: blue;">
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="float stats" style="float:none;margin-right:23%;">
+            <p>Total Campaigns</p> <input type="button" value="{{f}}" style="background-color: blue;">
+        </div>
+        <br><br><br><br>
+        <h1 style="margin-left:45%;">{{query|length}} new Queries</h1>
+        {% for i in query %}
+            <br>
+            <div class="request">
+                <div class="request-header">
+                    <h3>{{query.index(i)+1}} : by {{i.name}}</h3>
+                </div>
+                <div class="request-content">
+                    <h1 style="text-align: center;">Query/Feedback</h1>
+                    <div style="font-size: small;margin:1%;">
+                        <p>Email ID : {{i.emailid}}</p>
+                        <p>Query/Feedback : {{i.query1}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
+        <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a query for more details</p>
+    </div>
+    {% if flag %}
+        <script>
+            alert('Deleted User Successuflly');
+        </script>
+    {% endif %}
+</body>
+</html>

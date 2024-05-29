@@ -1,0 +1,130 @@
+body, ul, li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+body{
+    font-family: Arial;
+    background-image: url('/static/dbbg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+nav{
+    background-color: rgba(51, 51, 51, 0.7);
+}
+.navbar{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 50px;
+}
+.navbar li{
+    margin: 0 15px;
+    padding: 10px;
+}
+.border1{
+    border: solid gray;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-family: Arial;
+    padding: 10px;
+}
+.navbar li .border1:hover {
+    border: solid white;
+    color: white; 
+}
+.decor{
+    color: black;
+    float: left;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+b{
+    font-size: 200%;
+}
+p{
+    font-size: 150%;
+}
+a img{
+    width: 35px;
+    height: 35px;
+    margin: -8px;
+    position: absolute;
+}
+.request{
+    position: relative;
+    margin-left: 10%;
+    border: solid black;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 10%;
+    background-color: rgb(0, 0, 0);
+    cursor: pointer;
+    opacity:70%;
+    color:white;
+}
+.request-content,.request-options {
+    display: none;
+}
+.request-options{
+    text-align:center;
+}
+.request-content{
+    border:solid white;
+    margin-right:15%;
+    margin-left:15%;
+    border-radius: 5px;
+    margin-top:4%;
+}
+.request-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.request-header h3{
+    margin: 0;
+}
+.btn{
+    width: 200px;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 5px;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover{
+    opacity: 70%;
+}
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
+    text-align: center;
+    width: 100%;
+}
+
+label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+select, input{
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+input[type="submit"]{
+    background-color: #4CAF50;
+    color: white;
+    width: auto;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}

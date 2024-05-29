@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy 
 
 db = SQLAlchemy()
-#table containing the name of the sponsor 
 class Sponsors(db.Model):
     __tablename__ = 'sponsors'
     ID = db.Column(db.Integer,primary_key = True,autoincrement = True)
@@ -11,7 +10,6 @@ class Sponsors(db.Model):
     industry = db.Column(db.String,nullable=False)
     budget = db.Column(db.Integer,nullable=False)
 
-#table containing the name of the influencers
 class Influencer(db.Model):
     __tablename__ = 'influencer'
     ID = db.Column(db.Integer,primary_key = True,autoincrement = True)
@@ -20,34 +18,33 @@ class Influencer(db.Model):
     name = db.Column(db.String,nullable = False)
     category = db.Column(db.String,nullable = False)  
     reach = db.Column(db.Integer,nullable = False)
+    niche = db.Column(db.String)
 
 class Campaign(db.Model):
     __tablename__ = 'campaign'
     campaignID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    sponsorname = db.Column(db.String,nullable = False,unique = True) #ye id hain name nahi 
-    campaignname = db.Column(db.String,nullable = False,unique = True) #ye name hain 
-    companyname = db.Column(db.String,nullable = False,unique=True)
-    flag = db.Column(db.Integer,nullable=False) #if flagged then the campaign wont be shown anymore 
+    sponsorname = db.Column(db.String,nullable = False) 
+    campaignname = db.Column(db.String,nullable = False,unique = True) 
+    companyname = db.Column(db.String,nullable = False)
+    budget = db.Column(db.Integer,nullable = False)
+    startdate = db.Column(db.Date,nullable=False,server_default=db.text('CURRENT_DATE'))
+    niche = db.Column(db.String)
 
 class CampaignRequests(db.Model):
     __tablename__ = 'requests'
     requestID = db.Column(db.Integer,primary_key = True,autoincrement = True)
     campaignname = db.Column(db.Integer)
-    influencername = db.Column(db.String) #ye username hain
-    sponsorname = db.Column(db.String) #ye username hain 
-    name = db.Column(db.String) #currently kaunse username ke page par dikhana hain 
+    influencername = db.Column(db.String)
+    sponsorname = db.Column(db.String) 
+    name = db.Column(db.String) 
     payment = db.Column(db.Integer)
     addetails = db.Column(db.String)
     companyname = db.Column(db.String)
     reqtype = db.Column(db.String) 
 
-#contact us wale page pe ye hoga 
 class Queries(db.Model):
     __tablename__ = 'queries'
     queryid = db.Column(db.Integer,primary_key = True,autoincrement = True)
     name = db.Column(db.String)
-    query = db.Column(db.String)
+    query1 = db.Column(db.String)
     emailid = db.Column(db.String)  
-
-#add a feature in which admin can ban a person just use delete from table ... where .. 
-#jaruvat padi toh ek ad krke bhi bana dena table

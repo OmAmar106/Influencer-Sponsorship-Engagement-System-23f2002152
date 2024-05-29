@@ -23,7 +23,7 @@
         <img src="/static/pfpc.png" class="pic">
         <div class="info">
             <p>Username : {{L.username}}</p>
-            <p>Name : {{L.companyname}}</p>
+            <p>Company Name : {{L.companyname}}</p>
             <p>Industry : {{L.industry}}</p>
             <p>Budget : ${{L.budget}}</p>
         </div>
@@ -54,29 +54,48 @@
                     {% endif %}
                     </p>
                 </div>
+                {% if flag and i.reqtype=='W' or string=='Flag' %}
+                    <form method="POST">
+                        <input type="hidden" value="{{i.requestID}}" name="delete">
+                        <input type="submit" class="btn" style="background-color: red;margin-left: 35%;" value="{{string}} Ad">
+                    </form>
+                {% endif %}
             </div>  
         </div>
     {% endfor %}
     <br>
-    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a campaign for more details</p>
+    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on an ad for more details</p>
     <br>
-    <h1 style="text-align:center;">{{L3|length}} Past Campaigns</h1>
+    <h1 style="text-align:center;">{{L3|length}} Campaigns</h1>
     {% for i in L3 %}
-        {% if i.flag=='A' %}
-            <br>
-            <div class="request">
-                <div class="request-header">
-                    <h3>{{L3.index(i)+1}} : {{i.campaignname}}</h3>
-                </div>
-                <div class="request-content">
-                    <h1 style="text-align: center;">Campaign Details</h1>
-                    <div style="font-size: small;margin:1%;">
-                        <p>Sponsor Name : {{i.sponsorname}}</p>
-                        <p>Company Name : {{i.companyname}}</p>
-                    </div>
-                </div>  
+        <br>
+        <div class="request">
+            <div class="request-header">
+                <h3>{{L3.index(i)+1}} : {{i.campaignname}}</h3>
             </div>
-        {% endif %}
+            <div class="request-content">
+                <h1 style="text-align: center;">Campaign Details</h1>
+                <div style="font-size: small;margin:1%;">
+                    <p>Sponsor Name :<a href="/profile/{{i.sponsorname}}"> {{i.sponsorname}}</a></p>
+                    <p>Company Name : {{i.companyname}}</p>
+                    <p>Budget : {{i.budget}}</p>
+                    <p>Campaign Start Date : {{i.startdate}}</p>
+                    <p>Niche : {{i.niche}}</p>
+                </div>
+                {% if flag %}
+                    <form method="POST">
+                        <input type="hidden" value="{{i.campaignID}}" name="delete1">
+                        <input type="submit" class="btn" style="background-color: red;margin-left: 35%;" value="{{string}} Campaign">
+                    </form>
+                    {% if string=='Delete' %}
+                        <form method="POST">
+                            <input type="hidden" value="{{i.campaignID}}" name="modify">
+                            <input type="submit" class="btn" style="background-color: blue;margin-left: 35%;" value="Modify Campaign">
+                        </form>    
+                    {% endif %}
+                {% endif %}
+            </div>  
+        </div>
     {% endfor %}
     <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a campaign for more details</p>
 </body>

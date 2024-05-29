@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campaigns</title>
+    <link rel="stylesheet" href="/static/css/campaign.css">
+    <script src = "/static/js/infludash.js"></script>
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/dashbord" class="border1">Dashboard</a></li>
+            <li><a href="/users" class="border1">Search Users</a></li>
+            <li><a href="/campaigns" class="border1">Browse/Create Campaigns</a></li>
+            <li><a href="/contact" class="border1">Contact Us</a></li>
+            <li><a href="/profile"><img src="/static/pfpc.png"></a></li>
+            <li><a href="/logout" class="border1">Log Out</a></li>
+        </ul>
+    </nav>
+    <br>
+    {% if flag %}
+        <a href="/ad" ><input type="button" class="btn" style="background-color: blue;margin-left: 35%;font-size:125%;" value="Create Ad"></a>
+        <a href="/create" ><input type="button" class="btn" style="background-color: blue;margin-left:5%;font-size:125%;" value="Create Campaign"></a>
+        <br><hr><br>
+    {% endif %}
+    <form method="POST" style="margin-left:15%;font-size:150%;">
+        <label for="name">Campaign Name: </label>
+        <input type="text" name="name" style="width:10%;">&nbsp;
+        <label for="budget">Minimum Budget: </label>
+        <input type="number" id="budget" name="budget" value="0" required>&nbsp;
+        <label for="niche">Niche: </label>
+        <select id="niche" name="niche">
+            <option value="">Select</option>
+            {% for i in niche %}
+                <option value="{{i.niche}}">{{i.niche}}</option>
+            {% endfor %}
+        </select>
+        <input class="btn" style="background-color: rgb(10, 154, 10);width:8%;" type="submit" value="Filter">
+    </form>
+    <h1 style="text-align:center;">Campaigns found</h1>
+    {% for i in L3 %}
+        {% if st in i.campaignname %}
+            <br>
+            <div class="request">
+                <div class="request-header">
+                    <h3>{{i.campaignname}}</h3>
+                </div>
+                <div class="request-content">
+                    <h1 style="text-align: center;">Campaign Details</h1>
+                    <div style="font-size: small;margin:1%;">
+                        <p>Sponsor Name :<a href="/profile/{{i.sponsorname}}"> {{i.sponsorname}}</a></p>
+                        <p>Company Name : {{i.companyname}}</p>
+                        <p>Budget : {{i.budget}}</p>
+                        <p>Campaign Start Date : {{i.startdate}}</p>
+                        <p>Niche : {{i.niche}}</p>
+                    </div>
+                    {% if flag1 %}
+                        <a href="/ad/{{i.campaignID}}" ><input type="button" class="btn" style="background-color: green;margin-left: 35%;" value="Request Ad"></a>
+                    {% endif %}
+                </div>  
+            </div>
+        {% endif %}
+    {% endfor %}
+    <p style="color:red;text-align: center;font-size: large;font-style: italic;">click on a campaign for more details</p>
+</body>
+</html>

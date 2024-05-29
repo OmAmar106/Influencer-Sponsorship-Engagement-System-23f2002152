@@ -36,8 +36,9 @@ nav{
     padding: 20px;
     text-align: center;
     margin: 70px;
-    margin-left: 65%;
-    height: 450px;
+    margin-left: 33%;
+    margin-right:33%;
+    height: 550px;
     color: white;
     background-color: rgba(152, 132, 132, 0.3);
     border-radius: 10px;
@@ -63,7 +64,7 @@ form{
     margin-top: 30px;
     font-size:130%;
 }
-input,select{
+input{
     width: 80%;
     padding: 10px;
     margin-bottom: 15px;
@@ -71,9 +72,6 @@ input,select{
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-}
-select{
-    margin-left:10%;
 }
 input[type="submit"]{
     background-color: #007bff;
@@ -85,4 +83,3 @@ input[type="submit"]{
 input[type="submit"]:hover{
     background-color: #0056b3;
 }
-

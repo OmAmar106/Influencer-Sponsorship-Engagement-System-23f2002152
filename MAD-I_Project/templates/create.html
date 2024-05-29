@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create/Modify Campaign</title>
+    <link rel="stylesheet" href="/static/css/create.css">
+    <script>
+        function toggleDropdown(){
+            element = document.getElementById('toggle1')
+            element1 = document.getElementById('toggle')
+            if(element.style.display=="none"){
+                element.style.display = "block";
+                element1.style.display = "none";
+                element1.removeAttribute('name'); 
+                element.setAttribute('name', 'niche');
+            }
+            else{
+                element.style.display = "none";
+                element1.style.display = "block";
+                element1.setAttribute('name','niche'); 
+                element.removeAttribute('name');
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/dashbord" class="border1">Dashboard</a></li>
+            <li><a href="/users" class="border1">Search Users</a></li>
+            <li><a href="/campaigns" class="border1">Browse/Create Campaigns</a></li>
+            <li><a href="/contact" class="border1">Contact Us</a></li>
+            <li><a href="/profile"><img src="/static/pfpc.png"></a></li>
+            <li><a href="/logout" class="border1">Log Out</a></li>
+        </ul>
+    </nav>
+    <br>
+    <h1>Create/Modify Campaign</h1>
+    <br>
+    <form method="POST" style="text-align: center;">
+        <h2>Enter Campaign Details</h2> 
+        <br>
+        Enter Campaign Name : <input type="text" value="{{L.campaignname}}" name="campaignname" required>
+        <br><br>
+        Enter Budget :  <input type="number" value="{{L.budget}}" name="budget" required>
+        <br><br>
+        Enter Niche : 
+        <input type="button" class="btn" style="width:5px;height:5px;display:block;float:right;margin-right:0%;" onclick="toggleDropdown()">
+        <input type = "text" id="toggle1" style="display:none;" value="">
+        <select name="niche" id="toggle" style="display:block">
+            {% for i in niche %}
+                <option value="{{i.niche}}">{{i.niche}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" class="btn" value="Modify/Add Campaign">
+    </form>
+    {% if flag %}
+        <br>
+        <p style="text-align: center;">Campaign already exists, name must be unique.</p>
+    {% endif %}
+    <p style="font-size:medium;">Start date will be added as today's date.</p>
+</body>
+</html>

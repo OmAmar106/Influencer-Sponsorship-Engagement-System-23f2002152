@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Log in to ADFinder</title>
+        <title>Enter Deatils</title>
         <link rel = "stylesheet" href = "/static/css/enterdetails.css">
-        <!--add a icon here for the website-->
-        <!--also in others , add useful info such as db er model and all-->
+        <script>
+            function toggleDropdown(){
+                element = document.getElementById('toggle1')
+                element1 = document.getElementById('toggle')
+                if(element.style.display=="none"){
+                    element.style.display = "block";
+                    element1.style.display = "none";
+                    element1.removeAttribute('name'); 
+                    element.setAttribute('name', 'industrycategory');
+                }
+                else{
+                    element.style.display = "none";
+                    element1.style.display = "block";
+                    element1.setAttribute('name','industrycategory'); 
+                    element.removeAttribute('name');
+                }
+            }
+        </script>
     </head>
     <body>
         <nav>
@@ -23,7 +39,7 @@
         <div class="content">
             <h1 style="text-align: center;">Details</h1>
             {% if type=='sponsor' %}
-                <form onsubmit="return validate()" method="POST" name="form">
+                <form method="POST" name="form">
                     Company Name : <input type = "text" name = 'name' required>
                     <br>
                     Industry : <input type = "text" name = 'industrycategory' required>
@@ -33,15 +49,21 @@
                     <input type = "submit" value = "submit">    
                 </form>
             {% else %}
-                <form onsubmit="return validate()" method="POST" name="form">
-                    Channel Name : <input type = "text" name = 'name' required>
+                <form method="POST" name="form">
+                    Channel Name : <input type = "text" name = "name" required>
                     <br>
-                    Category : <input type = "text" name = 'industrycategory' required>
-                    <br>
+                    Category : <input type="button" class="btn" style="width:5px;height:5px;display:block;float:right;margin-right:10%;" onclick="toggleDropdown()">
+                    <input type = "text" id="toggle1" style="margin-left:10%;display:none;" value="">
+                    <select name="industrycategory" id="toggle" style="display:block" class="btn">
+                        {% for i in L %}
+                            <option value="{{i.category}}">{{i.category}}</option>
+                        {% endfor %}
+                    </select>
                     Reach(Thousands) : <input type = "number" name = 'budgetreach' required>
                     <br><br>
                     <input type = "submit" value = "submit">    
                 </form>
+                <p style="color:red;font-size:small;">You can enter niche later in your profile</p>
             {% endif %}
         </div>
     </body>
