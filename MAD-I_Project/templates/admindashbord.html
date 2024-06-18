@@ -48,6 +48,10 @@
                         <a href="/profile/{{i.influencername}}" style="color:white;text-decoration: none;"><p>Influencer Name : <span style="color:blue;text-decoration: underline;">{{i.influencername}}</span></p></a>
                         <p>Company Name : {{i.companyname}}</p>
                         <p>Payment : {{i.payment}}</p>
+                        {% if i.reqtype=='A' %}
+                            <p>Start Date : {{i.startdate}}</p>
+                            <label for = "date1">Progress : </label><input type="Button" class="btn" value="Click" style="background-color:green;" onclick="this.value = days('{{i.startdate}}','{{i.days}}')+'%'">
+                        {% endif %}    
                         <p>AD Details : {{i.addetails}}</p>
                         <p>Status : 
                         {% if i.reqtype=='A' %}
@@ -75,7 +79,7 @@
                     <h3>{{waitinglist1.index(i)+1}} : {{i.campaignname}}</h3>
                 </div>
                 <div class="request-content">
-                    <h1 style="text-align: center;">AD Request Details</h1>
+                    <h1 style="text-align: center;">Campaign Details</h1>
                     <div style="font-size: small;margin:1%;">
                         <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
                         <p>Company Name : {{i.companyname}}</p>

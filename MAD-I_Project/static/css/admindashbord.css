@@ -42,7 +42,7 @@ nav{
 b{
     font-size: 200%;
 }
-p{
+p,label{
     font-size: 150%;
 }
 a img{

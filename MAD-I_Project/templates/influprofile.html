@@ -4,6 +4,11 @@
     <title>{{L.name}}</title>
     <link rel="stylesheet" href="/static/css/influprofile.css">
     <script src = "/static/js/infludash.js"></script>
+    <script>
+        function load(){
+          document.getElementById('pfp').src = "/static/pfpc.png";
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -20,7 +25,7 @@
     <h1 style="text-align:center;">Influencer Profile</h1>
     <br>
     <div class="container">
-        <img src="/static/pfpc.png" class="pic">
+        <img src="/static/pfps/{{L.username}}.PNG" class="pic" id="pfp" onerror="load()">
         <div class="info">
             <p>Username : {{L.username}}</p>
             <p>Name : {{L.name}}</p>
@@ -38,7 +43,14 @@
             {% endif %}
         </div>
     </div>
-    <br>
+    {% if flag %}
+        <form method="post" enctype="multipart/form-data" style="margin-left:10%;margin-top:-5%;">
+            <input type="file" name="file">
+            <br>
+            <input type="submit" value="Upload">
+        </form>
+    {% endif %}
+    <br><br>
     <h1 style="text-align:center;">{{waitinglist|length}} Past AD Requests</h1>
     <br>
     {% for i in waitinglist %}
@@ -53,6 +65,10 @@
                     <a href="/profile/{{i.sponsorname}}" style="color:white;text-decoration: none;"><p>Sponsor Name : <span style="color:blue;text-decoration: underline;">{{i.sponsorname}}</span></p></a>
                     <p>Company Name : {{i.companyname}}</p>
                     <p>Payment : {{i.payment}}</p>
+                    {% if i.reqtype=='A' %}
+                        <p>Start Date : {{i.startdate}}</p>
+                        <label for = "date1">Progress : </label><input type="Button" class="btn" value="Click" style="background-color:green;" onclick="this.value = days('{{i.startdate}}','{{i.days}}')+'%'">
+                    {% endif %}    
                     <p>AD Details : {{i.addetails}}</p>
                     <p>Status : 
                     {% if i.reqtype=='A' %}

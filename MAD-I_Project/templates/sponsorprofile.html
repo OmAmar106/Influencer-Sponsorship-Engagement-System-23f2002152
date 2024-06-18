@@ -4,6 +4,11 @@
     <title>{{L.username}}</title>
     <link rel="stylesheet" href="/static/css/sponsorprofile.css">
     <script src = "/static/js/infludash.js"></script>
+    <script>
+        function load(){
+          document.getElementById('pfp').src = "/static/pfpc.png";
+        }
+    </script>
 </head>
 <body>
     <nav>
@@ -20,7 +25,7 @@
     <h1 style="text-align:center;">Sponsor Profile</h1>
     <br>
     <div class="container">
-        <img src="/static/pfpc.png" class="pic">
+        <img src="/static/pfps/{{L.username}}.PNG" class="pic" id="pfp" onerror="load()">
         <div class="info">
             <p>Username : {{L.username}}</p>
             <p>Company Name : {{L.companyname}}</p>
@@ -28,9 +33,14 @@
             <p>Budget : ${{L.budget}}</p>
         </div>
     </div>
-    <br>
+    {% if string=='Delete' %}
+        <form method="post" enctype="multipart/form-data" style="margin-left:10%;">
+            <input type="file" name="file" >
+            <br>
+            <input type="submit" value="Upload">
+        </form>
+    {% endif %}
     <h1 style="text-align:center;">{{waitinglist|length}} Past AD Requests</h1>
-    <br>
     {% for i in waitinglist %}
         <br>
         <div class="request">
@@ -43,7 +53,19 @@
                     <a href="/profile/{{i.influencername}}" style="color:white;text-decoration: none;"><p>Influencer Name : <span style="color:blue;text-decoration: underline;">{{i.influencername}}</span></p></a>
                     <p>Company Name : {{i.companyname}}</p>
                     <p>Payment : {{i.payment}}</p>
-                    <p>AD Details : {{i.addetails}}</p>
+                    {% if i.reqtype=='A' %}
+                        <p>Start Date : {{i.startdate}}</p>
+                        <label for = "date1">Progress : </label><input type="Button" class="btn" value="Click" style="background-color:green;" onclick="this.value = days('{{i.startdate}}','{{i.days}}')+'%'">
+                    {% endif %}
+                    {% if string=='Delete' %}
+                        <form method="POST">
+                            <input type="hidden" value="{{i.requestID}}" name="modi">
+                            <label for="dets">AD Details : </label><input type="text" value="{{i.addetails}}" name="dets">
+                            <input type="submit" class="btn" style="background-color:blue;float:right;margin-top:1%;" value="Modify">
+                        </form>
+                    {% else %}
+                        <p>AD Details : {{i.addetails}}</p>
+                    {% endif %}
                     <p>Status : 
                     {% if i.reqtype=='A' %}
                         <input type="button" class="btn" style="background-color: rgb(83, 236, 83);" value="Accepted">

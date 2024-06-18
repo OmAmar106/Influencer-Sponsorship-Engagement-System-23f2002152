@@ -236,6 +236,12 @@ def selfprofile():
 @app.route('/profile/<string:s>',methods=['POST','GET'])
 def profile(s):
     if request.method=='POST':
+        if 'file' in request.files:
+            file = request.files['file']
+            name = file.filename.split('.')
+            if name[-1]=='png' or name[-1]=='PNG':
+                file.save(app.root_path+'/static/pfps/'+s+'.PNG')
+            return redirect('/profile')
         if 'reach' in request.form:
             reach = request.form['reach']
             category = request.form['category']
@@ -249,12 +255,17 @@ def profile(s):
             return redirect('/profile')
         flag1 = False
         flag2 = False
+        flag3 = False
+        flag4 = False
         for i in request.form:
             if 'modify' in i:
                 flag1 = True
                 break
             elif 'delete1' in i:
                 flag2 = True
+                break
+            elif 'delete' in i:
+                flag3 = True
                 break
         if flag1:
             session['modify'] = request.form['modify']
@@ -269,11 +280,18 @@ def profile(s):
             for i in L:
                 db.session.delete(i)
             db.session.commit()
-        else:
+        elif flag3:
             requestID = request.form['delete']
             L = CampaignRequests.query.filter_by(requestID=requestID).all()
             L = L[0]
             db.session.delete(L)
+            db.session.commit()
+        else:
+            addets = request.form['dets']
+            modi = request.form['modi']
+            L = CampaignRequests.query.filter_by(requestID=modi).all()
+            L = L[0]
+            L.addetails = addets
             db.session.commit()
         L2 = CampaignRequests.query.filter_by(sponsorname=s).all()
         L3 = Campaign.query.filter_by(sponsorname=s).all()
@@ -379,12 +397,11 @@ def createcamp():
             for i in L1:
                 if i.campaignname==L.campaignname:
                     i.campaignname = campaignname
-                    i.budget = budget
-                    i.niche = niche
             db.session.delete(L)
             db.session.commit()
             session.pop('modify',None)
-            L = Campaign(sponsorname=session['userid'],campaignname=campaignname,budget=budget,companyname=company,niche=niche)
+            date = L.startdate
+            L = Campaign(sponsorname=session['userid'],campaignname=campaignname,budget=budget,companyname=company,niche=niche,startdate=date)
             db.session.add(L)
             db.session.commit()
             return redirect('/profile')
@@ -425,7 +442,6 @@ def bcampaigns():
             flag = True
         elif 'type' in session and session['type']=='influencer':
             flag1 = True
-        print(niche)
         if niche=="":
             L3 = Campaign.query.filter(Campaign.budget>=budget).all()
         else:
@@ -448,7 +464,8 @@ def requestad(n):
         L = L[0]
         payment = request.form['budget']
         addetails = request.form['details']
-        L1 = CampaignRequests(campaignname=L.campaignname,influencername=session['userid'],sponsorname=L.sponsorname,name=L.sponsorname,payment=payment,addetails=addetails,companyname=L.companyname,reqtype='W')
+        days = request.form['days']
+        L1 = CampaignRequests(campaignname=L.campaignname,influencername=session['userid'],sponsorname=L.sponsorname,name=L.sponsorname,payment=payment,addetails=addetails,companyname=L.companyname,reqtype='W',days=days)
         db.session.add(L1)
         db.session.commit()
         return redirect('/profile')
@@ -471,12 +488,13 @@ def createad():
         payment = request.form['budget']
         addetails = request.form['details']
         influencername = request.form['influencername']
+        days = request.form['days']
         L1 = Influencer.query.filter_by(username=influencername).all()
         if L1:
             pass
         else:
             return redirect('/users')
-        L1 = CampaignRequests(campaignname=campaignname,influencername=influencername,sponsorname=session['userid'],name=influencername,payment=payment,addetails=addetails,companyname=L.companyname,reqtype='W')
+        L1 = CampaignRequests(campaignname=campaignname,influencername=influencername,sponsorname=session['userid'],name=influencername,payment=payment,addetails=addetails,companyname=L.companyname,reqtype='W',days=days)
         db.session.add(L1)
         db.session.commit()
         return redirect('/profile')
@@ -545,7 +563,9 @@ def apiad(s):
                 "companyname":L.companyname,
                 "payment":L.payment,
                 "addetails":L.addetails,
-                "reqtype":reqtype
+                "reqtype":reqtype,
+                "startdate":L.startdate,
+                "days":L.days
             }
             d1[L2.index(L)+1] = d
         return jsonify(d1)

@@ -33,7 +33,7 @@ class Campaign(db.Model):
 class CampaignRequests(db.Model):
     __tablename__ = 'requests'
     requestID = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    campaignname = db.Column(db.Integer)
+    campaignname = db.Column(db.String,nullable=False)
     influencername = db.Column(db.String)
     sponsorname = db.Column(db.String) 
     name = db.Column(db.String) 
@@ -41,6 +41,8 @@ class CampaignRequests(db.Model):
     addetails = db.Column(db.String)
     companyname = db.Column(db.String)
     reqtype = db.Column(db.String) 
+    startdate = db.Column(db.Date,nullable=False,server_default=db.text('CURRENT_DATE'))
+    days = db.Column(db.Integer)
 
 class Queries(db.Model):
     __tablename__ = 'queries'

@@ -42,7 +42,7 @@ nav{
 b{
     font-size: 200%;
 }
-p{
+p,label{
     font-size: 150%;
 }
 a img{
@@ -109,4 +109,12 @@ a img{
 .info{
     font-size: 18px;
     margin: 5px 0;
+}
+input[type="text"]{
+    width: 58%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
 }

@@ -72,3 +72,17 @@ function change() {
         sponsorInput.style.display = "none";
     }
 }
+var da = new Date();
+var d = da.getDate();
+var m = da.getMonth()+1; 
+var y = da.getFullYear();
+var k = y + '-' + (m < 10 ? '0' + m : m) + '-' + (d < 10 ? '0' + d : d);
+function days(a,b){
+    a = new Date(a);
+    k = new Date(k);
+    var diff = Math.floor((k-a)/(1000*60*60*24));
+    diff = diff*100;
+    diff = Math.floor(diff/b);
+    diff = Math.min(diff,100)
+    return diff;
+}
