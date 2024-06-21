@@ -14,4 +14,18 @@ Some of the Features are : <br>
 It was made using Python(Flask) , HTML , CSS , JS.<br><br>
 To Install Dependencies : <br>
 <pre>>> pip3 install Flask</pre>
-To add pictures <br>
+
+# Some Screenshots <br>
+<br>![campaign](https://github.com/OmAmar106/Influencer-Sponsorship-System-23f2002152/assets/142908269/7357e27f-ea3d-4f06-a6b5-f3e969fa7266)
+<br>![profile](https://github.com/OmAmar106/Influencer-Sponsorship-System-23f2002152/assets/142908269/c52b3198-018e-4243-a7e6-fc4fa31994f9)
+<br>![history](https://github.com/OmAmar106/Influencer-Sponsorship-System-23f2002152/assets/142908269/a008c49d-5a0d-457f-bdf3-a5427e8de336)
+<br>![usersearch](https://github.com/OmAmar106/Influencer-Sponsorship-System-23f2002152/assets/142908269/b0a004fe-d145-4b02-b8f7-7496a2545975)
+<br>![signupform](https://github.com/OmAmar106/Influencer-Sponsorship-System-23f2002152/assets/142908269/d5e3a10c-a592-4049-beb1-b8b8774d5025)
+
+<br>API End Points : <br><br>
+For users : 
+<pre>>> /api/user/userid </pre>
+For ads : 
+<pre>>> /api/ad/adname</pre>
+For Campaigns : 
+<pre>>> /api/campaign/campaignname</pre>
