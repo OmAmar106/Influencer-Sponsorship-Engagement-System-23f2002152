@@ -1,6 +1,8 @@
 # Influencer-Sponsorship-System
 <hr>
-This repository consists of MAD-I Project by 23f2002152. (May-September Term)<br><br>
+-by Om Amar
+<br><br>
+This repository consists of MAD-I Project by 23f2002152 (Om Amar) . (May-September Term)<br><br>
 This is a Influencer Sponsorship management system with many Features.<br><br>
 Some of the Features are : <br>
 1. Creating a Sponsor/Influencer Profile.<br>
