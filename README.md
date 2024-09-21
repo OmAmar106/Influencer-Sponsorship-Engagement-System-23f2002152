@@ -1,8 +1,8 @@
-# Influencer Sponsorship Management System  
+# Influencer Sponsorship Engagement System  
 
 This repository contains the **MAD-I Project** by **Om Amar (23f2002152)**, developed during the **May-September term**.  
 
-This project is a comprehensive **Influencer Sponsorship Management System** that simplifies the collaboration process between **Sponsors** and **Influencers**. It includes a variety of features for sponsors, influencers, and admins to manage their tasks effectively.
+This project is a comprehensive **Influencer Sponsorship Engagement System** that simplifies the collaboration process between **Sponsors** and **Influencers**. It includes a variety of features for sponsors, influencers, and admins to manage their tasks effectively.
 
 ---
 
