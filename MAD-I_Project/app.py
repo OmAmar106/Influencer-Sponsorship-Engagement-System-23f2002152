@@ -7,8 +7,7 @@ from table import *
 import jinja2
 
 app = Flask(__name__)
-app.instance_path = os.path.join(os.getcwd(), 'instance')
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.sqlite3"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///tmp/database.sqlite3"
 db.init_app(app)
 app.app_context().push()
 app.secret_key = "APtlnuRu04uv"
